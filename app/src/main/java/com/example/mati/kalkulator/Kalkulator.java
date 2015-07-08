@@ -6,34 +6,178 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class Kalkulator extends ActionBarActivity {
+
+
+    Button b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,add,sub,mul,div,eq,dot;
+    TextView display;
+    int action=0;
+    double firstNumber=0,secondNumber=0,result=0;
+    boolean dott=false;
+    public void Click0(View v)
+    {
+       display.setText(display.getText()+"0");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click1(View v)
+    {
+        display.setText(display.getText()+"1");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click2(View v)
+    {
+        display.setText(display.getText()+"2");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click3(View v)
+    {
+        display.setText(display.getText()+"3");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click4(View v)
+    {
+        display.setText(display.getText()+"4");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click5(View v)
+    {
+        display.setText(display.getText()+"5");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click6(View v)
+    {
+        display.setText(display.getText()+"6");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click7(View v)
+    {
+        display.setText(display.getText()+"7");
+        if (action ==0 || action ==2)
+            action++;
+    }
+
+    public void Click8(View v)
+    {
+        display.setText(display.getText()+"8");
+        if (action ==0 || action ==2)
+            action++;
+    }
+    public void Click9(View v)
+    {
+        display.setText(display.getText()+"9");
+        if (action ==0 || action ==2)
+            action++;
+    }
+    public void ClickMul(View v)
+    {
+        if (action==1) {
+            display.setText(display.getText() + "*");
+            action++;
+            dott=false;
+            getFirstNumber();
+        }
+    }
+    public void ClickDiv(View v)
+    {
+        if (action==1) {
+         //   display.setText(display.getText() + "/");
+            action++;
+            dott=false;
+            getFirstNumber();
+
+
+        }
+    }
+    public void ClickAdd(View v)
+    {
+        if (action==1) {
+           // display.setText(display.getText() + "+");
+            action++;
+            dott=false;
+            getFirstNumber();
+
+
+        }
+    }
+    public void ClickSub(View v)
+    {
+        if (action==1) {
+           // display.setText(display.getText() + "-");
+            action++;
+            dott=false;
+            getFirstNumber();
+        }
+    }
+    public void ClickDot(View v)
+    {
+        if ((action==1 || action ==2)&& dott==false) {
+            display.setText(display.getText() + ".");
+            dott = true;
+        }
+    }
+
+
+    public void ClickClear(View view)
+    {
+        action=0;
+        display.setText("");
+    }
+
+    public void ClickEq(View v)
+    {
+        if (action==3) {
+            getSecondNumber();
+            result = firstNumber + secondNumber;
+            display.setText(Double.toString(result));
+        }
+    }
+
+    public void getFirstNumber()
+    {
+        try {
+            firstNumber = Double.parseDouble(display.getText().toString());
+        } catch(NumberFormatException nfe) {
+
+        }
+        display.setText("");
+    }
+
+    public void getSecondNumber()
+    {
+        try {
+            secondNumber = Double.parseDouble(display.getText().toString());
+        } catch(NumberFormatException nfe) {
+
+        }
+        display.setText("");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kalkulator);
+        init();
+
+
     }
 
-    private EditText Display = (EditText) findViewById(R.id.editText);
-    float Number;
-    String Operation;
-    private ButtonClickListener buttonClick;
-
-    int idList[] = {R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
-            R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9,
-            R.id.buttonDot, R.id.buttonDiv, R.id.buttonMn, R.id.buttonMin, R.id.buttonPl, R.id.buttonEq
-    };
-
-    {
-        for (int id : idList) {
-            View v = (View) findViewById(id);
-            v.setOnClickListener(buttonClick);
-
-        }
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,66 +197,28 @@ public class Kalkulator extends ActionBarActivity {
             return true;
         }
 
+
+
         return super.onOptionsItemSelected(item);
     }
-
-public void mMath (String str){
-    Number = Float.parseFloat(Display.getText().toString()); // save number of display
-    Operation = str; // save operation
-    Display.setText("0"); // clear display
-}
-    // new class ButtonClickListener
-public void getKeyboard(String str)
-{
-    String DisplayCurrent = Display.getText().toString();
-    DisplayCurrent += Display;
-    Display.setText(DisplayCurrent);
-}
-
-    public void mResult()
+    private void init()
     {
-        float Num = Float.parseFloat(Display.getText().toString());
-        float result=0;
-        if (Operation.equals("+")){
-            result = Num + Number;
-        }
-        if (Operation.equals("-")){
-            result = Num - Number;
-        }
-        if (Operation.equals("*")){
-            result = Num * Number;
-        }
-        if (Operation.equals("/")){
-            result = Num / Number;
-        }
-        Display.setText(String.valueOf(result));
-    }
-
-    private class ButtonClickListener implements View.OnClickListener {
-        public void onClick(View v){
-            switch (v.getId()){
-                case R.id.buttonPl: // function add
-                    mMath("+");
-                    break;
-                case R.id.buttonMin:
-                    mMath("-");
-                    break;
-                case R.id.buttonMn:
-                    mMath("*");
-                    break;
-                case R.id.buttonDiv:
-                    mMath("/");
-                    break;
-                case R.id.buttonEq:
-                    mResult();
-                    break;
-            /*    default:
-                    String n = ((Button) v).getText().toString();
-                    getKeyboard(n);
-*/
-            }
-
-        }
-
+        b0=(Button) findViewById(R.id.b0);
+        b1=(Button) findViewById(R.id.b1);
+        b2=(Button) findViewById(R.id.b2);
+        b3=(Button) findViewById(R.id.b3);
+        b4=(Button) findViewById(R.id.b4);
+        b5=(Button) findViewById(R.id.b5);
+        b6=(Button) findViewById(R.id.b6);
+        b7=(Button) findViewById(R.id.b7);
+        b8=(Button) findViewById(R.id.b8);
+        b9=(Button) findViewById(R.id.b9);
+        dot=(Button) findViewById(R.id.dot);
+        eq=(Button) findViewById(R.id.eq);
+        sub=(Button) findViewById(R.id.sub);
+        div=(Button) findViewById(R.id.div);
+        mul=(Button) findViewById(R.id.mul);
+        add=(Button) findViewById(R.id.add);
+        display=(TextView) findViewById(R.id.textView);
     }
 }
