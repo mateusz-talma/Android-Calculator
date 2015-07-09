@@ -7,19 +7,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import static java.lang.Math.*;
 
 public class Kalkulator extends ActionBarActivity {
 
 
     Button b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,add,sub,mul,div,eq,dot;
     TextView display;
-    int action=0;
+    int action=0, temp=0;
     double firstNumber=0,secondNumber=0,result=0;
     boolean dott=false;
+    String operation;
     public void Click0(View v)
     {
-       display.setText(display.getText()+"0");
+        if (action!=-1 && display.getText().toString() != "0")
+            display.setText(display.getText() + "0");
+        if (action==-1)
+        {
+            display.setText("0");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -27,6 +34,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click1(View v)
     {
         display.setText(display.getText()+"1");
+        if (action==-1)
+        {
+            display.setText("1");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -34,6 +46,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click2(View v)
     {
         display.setText(display.getText()+"2");
+        if (action==-1)
+        {
+            display.setText("2");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -41,6 +58,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click3(View v)
     {
         display.setText(display.getText()+"3");
+        if (action==-1)
+        {
+            display.setText("3");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -48,6 +70,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click4(View v)
     {
         display.setText(display.getText()+"4");
+        if (action==-1)
+        {
+            display.setText("4");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -55,6 +82,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click5(View v)
     {
         display.setText(display.getText()+"5");
+        if (action==-1)
+        {
+            display.setText("5");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -62,6 +94,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click6(View v)
     {
         display.setText(display.getText()+"6");
+        if (action==-1)
+        {
+            display.setText("6");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -69,6 +106,11 @@ public class Kalkulator extends ActionBarActivity {
     public void Click7(View v)
     {
         display.setText(display.getText()+"7");
+        if (action==-1)
+        {
+            display.setText("7");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
@@ -76,19 +118,30 @@ public class Kalkulator extends ActionBarActivity {
     public void Click8(View v)
     {
         display.setText(display.getText()+"8");
+        if (action==-1)
+        {
+            display.setText("8");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
     public void Click9(View v)
     {
         display.setText(display.getText()+"9");
+        if (action==-1)
+        {
+            display.setText("9");
+            action++;
+        }
         if (action ==0 || action ==2)
             action++;
     }
     public void ClickMul(View v)
     {
         if (action==1) {
-            display.setText(display.getText() + "*");
+            operation="*";
+          //  display.setText(display.getText() + "*");
             action++;
             dott=false;
             getFirstNumber();
@@ -98,6 +151,7 @@ public class Kalkulator extends ActionBarActivity {
     {
         if (action==1) {
          //   display.setText(display.getText() + "/");
+            operation="/";
             action++;
             dott=false;
             getFirstNumber();
@@ -109,6 +163,7 @@ public class Kalkulator extends ActionBarActivity {
     {
         if (action==1) {
            // display.setText(display.getText() + "+");
+            operation="+";
             action++;
             dott=false;
             getFirstNumber();
@@ -120,14 +175,48 @@ public class Kalkulator extends ActionBarActivity {
     {
         if (action==1) {
            // display.setText(display.getText() + "-");
+            operation="-";
             action++;
             dott=false;
             getFirstNumber();
         }
     }
+
+    public void ClickPow(View v)
+    {
+        if (action==1) {
+            operation = "pow";
+            action++;
+            dott = false;
+            getFirstNumber();
+        }
+    }
+
+    public void ClickLog (View v)
+    {
+
+    }
+
+    public void ClickLn (View v)
+    {
+
+    }
+
+    public void ClickSilnia (View v)
+    {
+        if (action==1 && dott == false)
+        {
+            getFirstNumber();
+            silnia();
+            display.setText(Double.toString(result));
+            action=-1;
+            result=0;
+            dott=false;
+        }
+    }
     public void ClickDot(View v)
     {
-        if ((action==1 || action ==2)&& dott==false) {
+        if ((action==1 || action ==2 || action ==3)&& dott==false) {
             display.setText(display.getText() + ".");
             dott = true;
         }
@@ -144,8 +233,23 @@ public class Kalkulator extends ActionBarActivity {
     {
         if (action==3) {
             getSecondNumber();
-            result = firstNumber + secondNumber;
+            if (operation=="*")
+            result = firstNumber * secondNumber;
+            if (operation=="+")
+                result = firstNumber + secondNumber;
+            if (operation=="/")
+                result = firstNumber / secondNumber;
+            if (operation =="-")
+                result = firstNumber - secondNumber;
+            if (operation=="pow")
+                result = pow(firstNumber,secondNumber);
             display.setText(Double.toString(result));
+            action=-1;
+            operation="";
+            dott=false; // mo¿na dodaæ przecinek
+            firstNumber=0;
+            secondNumber=0;
+            result=0;
         }
     }
 
@@ -169,6 +273,13 @@ public class Kalkulator extends ActionBarActivity {
         display.setText("");
     }
 
+    public void  silnia()
+    {
+        result=1;
+        for (int i=1;i<=firstNumber;i++)
+            result*=i;
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
